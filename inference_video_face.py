@@ -10,7 +10,7 @@ import cv2
 
 from collections import defaultdict
 from io import StringIO
-from matplotlib import pyplot as plt
+#from matplotlib import pyplot as plt
 from PIL import Image
 
 
@@ -19,6 +19,7 @@ sys.path.append("..")
 from utils import label_map_util
 from utils import visualization_utils_color as vis_util
 
+total_num = 30
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 PATH_TO_CKPT = './model/frozen_inference_graph_face.pb'
@@ -42,8 +43,8 @@ def load_image_into_numpy_array(image):
 import matplotlib.image as mpimg
 
 
-cap = cv2.VideoCapture("./media/test.mp4")
-out = cv2.VideoWriter("./media/test_out.avi", 0, 25.0, (1920, 1080))
+cap = cv2.VideoCapture("./media/test.mov")
+out = cv2.VideoWriter("./media/test_out.wmv", 0, 25.0, (1280, 720))  # out.avi, fourcc, fps, size(int(w),int(h))
 
 
 detection_graph = tf.Graph()
@@ -85,10 +86,23 @@ with detection_graph.as_default():
           feed_dict={image_tensor: image_np_expanded})
       elapsed_time = time.time() - start_time
       print('inference time cost: {}'.format(elapsed_time))
-      #print(boxes.shape, boxes)
-      #print(scores.shape,scores)
-      #print(classes.shape,classes)
-      #print(num_detections)
+      
+      #add this part to count objects
+
+      final_score = np.squeeze(scores)    
+      count = 0
+      for i in range(100):
+          if scores is None or final_score[i] > 0.5:
+                  count = count + 1
+      rate = count / total_num 
+      print(count)
+      print(rate)
+      
+#      print(len(boxes.shape))  # count objects
+#      print(boxes.shape, boxes)
+#      print(scores.shape,scores)
+#      print(classes.shape,classes)
+#      print(num_detections)
       # Visualization of the results of a detection.
       vis_util.visualize_boxes_and_labels_on_image_array(
 #          image_np,
@@ -99,6 +113,7 @@ with detection_graph.as_default():
           category_index,
           use_normalized_coordinates=True,
           line_thickness=4)
+#      print(boxes.shape[0])  # count objects
       out.write(image)
 #      plt.figure(figsize=IMAGE_SIZE)
 #      plt.imshow(image)
