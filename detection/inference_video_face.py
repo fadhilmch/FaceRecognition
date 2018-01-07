@@ -43,8 +43,9 @@ def load_image_into_numpy_array(image):
 import matplotlib.image as mpimg
 
 
-cap = cv2.VideoCapture("./media/test.mov")
-out = cv2.VideoWriter("./media/test_out.wmv", 0, 25.0, (1280, 720))  # out.avi, fourcc, fps, size(int(w),int(h))
+cap = cv2.VideoCapture("./media/test2.mov")
+fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+out = cv2.VideoWriter("./media/test2_out.avi", fourcc, 25.0, (1280, 720))  # out.avi, fourcc, fps, size(int(w),int(h))
 
 
 detection_graph = tf.Graph()
