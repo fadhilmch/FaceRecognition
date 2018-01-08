@@ -50,6 +50,6 @@ class FaceDetector:
         print('inference time cost: {}'.format(elapsed_time))
 
         # Ratio to real position
-        boxes[0, :, [0, 2]] = (boxes[0, :, [0, 2]]*image.shape[0]).astype(int)
-        boxes[0, :, [1, 3]] = (boxes[0, :, [1, 3]]*image.shape[1]).astype(int)
-        return np.squeeze(boxes), np.squeeze(scores)
+        boxes[0, :, [0, 2]] = (boxes[0, :, [0, 2]]*image.shape[0])
+        boxes[0, :, [1, 3]] = (boxes[0, :, [1, 3]]*image.shape[1])
+        return np.squeeze(boxes).astype(int), np.squeeze(scores)
