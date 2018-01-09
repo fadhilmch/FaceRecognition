@@ -24,6 +24,15 @@ class FaceDetector:
                 od_graph_def.ParseFromString(serialized_graph)
                 tf.import_graph_def(od_graph_def, name='')
 
+        self.image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
+        # Each box represents a part of the image where a particular object was detected.
+        self.boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
+        # Each score represent how level of confidence for each of the objects.
+        # Score is shown on the result image, together with the class label.
+        self.scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
+        self.classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
+        self.num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
+
     def __del__(self):
         self.sess.close()
 
@@ -32,20 +41,12 @@ class FaceDetector:
         # result image with boxes and labels on it.
         # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
         image_expanded = np.expand_dims(image, axis=0)
-        image_tensor = self.detection_graph.get_tensor_by_name('image_tensor:0')
-        # Each box represents a part of the image where a particular object was detected.
-        boxes = self.detection_graph.get_tensor_by_name('detection_boxes:0')
-        # Each score represent how level of confidence for each of the objects.
-        # Score is shown on the result image, together with the class label.
-        scores = self.detection_graph.get_tensor_by_name('detection_scores:0')
-        classes = self.detection_graph.get_tensor_by_name('detection_classes:0')
-        num_detections = self.detection_graph.get_tensor_by_name('num_detections:0')
 
         # Actual detection.
         start_time = time.time()
         (boxes, scores, classes, num_detections) = self.sess.run(
-            [boxes, scores, classes, num_detections],
-            feed_dict={image_tensor: image_expanded})
+            [self.boxes, self.scores, self.classes, self.num_detections],
+            feed_dict={self.image_tensor: image_expanded})
         elapsed_time = time.time() - start_time
         print('inference time cost: {}'.format(elapsed_time))
 

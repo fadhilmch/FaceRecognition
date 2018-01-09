@@ -4,7 +4,7 @@ import numpy as np
 from sklearn import neighbors, svm
 
 BASE_DIR = os.path.dirname(__file__) + '/'
-PATH_TO_PKL = 'classifier.pkl'
+PATH_TO_PKL = 'trained_classifier.pkl'
 
 
 class FaceClassifier:
@@ -24,7 +24,7 @@ class FaceClassifier:
         if model == 'knn':
             self.model = neighbors.KNeighborsClassifier(3, weights='uniform')
         else:  # svm
-            self.model = svm.SVC(gamma=0.001, C=100, kernel='linear')
+            self.model = svm.SVC(kernel='linear', probability=True)
         self.model.fit(X, y)
         if save_model_path is not None:
             with open(save_model_path, 'wb') as f:
@@ -35,4 +35,4 @@ class FaceClassifier:
             print('Train the model before doing classifications.')
             return
 
-        return self.model.predict(descriptor)
+        return self.model.predict([descriptor])[0]
