@@ -4,13 +4,15 @@ import numpy as np
 from detection.FaceDetector import FaceDetector
 
 face_detector = FaceDetector()
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture("Megamind.avi")
+
+fourcc = cv2.VideoWriter_fourcc(*'XVID')
+out = cv2.VideoWriter('output.avi', fourcc, 24.0, (int(video_capture.get(3)),int(video_capture.get(4))))
 
 print('Start Recognition!')
 prevTime = 0
-while True:
+while video_capture.isOpened():
     ret, frame = video_capture.read()
-    frame = cv2.resize(frame, (0, 0), fx=0.4, fy=0.4)  # resize frame (optional)
 
     curTime = time.time()  # calc fps
     find_results = []
@@ -42,12 +44,10 @@ while True:
     text_fps_y = 20
     cv2.putText(frame, str, (text_fps_x, text_fps_y),
                 cv2.FONT_HERSHEY_COMPLEX_SMALL, 1, (0, 0, 0), thickness=1, lineType=2)
-
-    cv2.imshow('Video', frame)
-
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    
+    out.write(frame)
 
 video_capture.release()
+out.release()
 cv2.destroyAllWindows()
 
