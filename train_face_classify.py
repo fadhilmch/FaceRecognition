@@ -6,7 +6,7 @@ from recognition.FaceRecognition import FaceRecognition
 from detection.FaceDetector import FaceDetector
 from classifier.FaceClassifier import FaceClassifier
 
-datadir = './media/train_classifier'
+datadir = '../../dataset/lfw/lfw_ssd/'
 
 face_detector = FaceDetector()
 face_recognition = FaceRecognition()
@@ -47,5 +47,5 @@ for i in range(nrof_images):
     features[2*i+1,:] = face_recognition.recognize(cropped_face_flip)
 
 print('Start training for images')
-face_classfier.train(features, labels, model='svm', save_model_path='./classifier/trained_classifier.pkl')
+face_classfier.train(features, labels, model='svm', save_model_path='./classifier/trained_classifier_lfw.pkl')
 
