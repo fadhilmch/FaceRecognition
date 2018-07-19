@@ -3,11 +3,14 @@ import time
 import numpy as np
 from detection.FaceDetector import FaceDetector
 
+VIDEO_INPUT_FILE = './media/test_video/Zidane_1.avi'
+VIDEO_OUTPUT_FILE = './media/test_video_output/Zidane_Detection_1.avi'
+
 face_detector = FaceDetector()
-video_capture = cv2.VideoCapture("Megamind.avi")
+video_capture = cv2.VideoCapture(VIDEO_INPUT_FILE)
 
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output.avi', fourcc, 24.0, (int(video_capture.get(3)),int(video_capture.get(4))))
+out = cv2.VideoWriter(VIDEO_OUTPUT_FILE, fourcc, 24.0, (int(video_capture.get(3)),int(video_capture.get(4))))
 
 print('Start Recognition!')
 prevTime = 0

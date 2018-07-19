@@ -5,13 +5,17 @@ from detection.FaceDetector import FaceDetector
 from recognition.FaceRecognition import FaceRecognition
 from classifier.FaceClassifier import FaceClassifier
 
+VIDEO_INPUT_FILE = './media/test_video/Zidane_1.avi'
+VIDEO_OUTPUT_FILE = './media/test_video_output/Zidane_Recognition_1.avi'
+FACE_CLASSIFIER_MODEL =  './classifier/trained_classifier_lfw.pkl'
+
 face_detector = FaceDetector()
 face_recognition = FaceRecognition()
-face_classfier = FaceClassifier('./classifier/trained_classifier.pkl')
-video_capture = cv2.VideoCapture("FakeObama.avi")
+face_classfier = FaceClassifier(FACE_CLASSIFIER_MODEL)
+video_capture = cv2.VideoCapture(VIDEO_INPUT_FILE)
 
 fourcc = cv2.VideoWriter_fourcc(*'XVID')
-out = cv2.VideoWriter('output2.avi', fourcc, 24.0, (int(video_capture.get(3)),int(video_capture.get(4))))
+out = cv2.VideoWriter(VIDEO_OUTPUT_FILE, fourcc, 24.0, (int(video_capture.get(3)),int(video_capture.get(4))))
 
 print('Start Recognition!')
 prevTime = 0
