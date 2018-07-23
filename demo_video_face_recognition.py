@@ -5,9 +5,9 @@ from detection.FaceDetector import FaceDetector
 from recognition.FaceRecognition import FaceRecognition
 from classifier.FaceClassifier import FaceClassifier
 
-VIDEO_INPUT_FILE = './media/test_video/Zidane_1.avi'
-VIDEO_OUTPUT_FILE = './media/test_video_output/Zidane_Recognition_1.avi'
-FACE_CLASSIFIER_MODEL =  './classifier/trained_classifier_lfw.pkl'
+VIDEO_INPUT_FILE = './media/test_video/Tony_Blair_360p_1.avi'
+VIDEO_OUTPUT_FILE = './media/test_video_output/Tony_Blair_Recognition_360p_lfwra10_1.avi'
+FACE_CLASSIFIER_MODEL =  './classifier/trained_classifier_lfw_reduced.pkl'
 
 face_detector = FaceDetector()
 face_recognition = FaceRecognition()

@@ -6,8 +6,8 @@ from recognition.FaceRecognition import FaceRecognition
 from detection.FaceDetector import FaceDetector
 from classifier.FaceClassifier import FaceClassifier
 
-DATADIR = '../../dataset/lfw_reduced/'
-OUTPUT_MODEL = './classifier/trained_classifier_lfw_reduced.pkl'
+DATADIR = '../../dataset/lfw_reduced_aboveten/'
+OUTPUT_MODEL = './classifier/trained_classifier_lfw_reduced_aboveten.pkl'
 
 face_detector = FaceDetector()
 face_recognition = FaceRecognition()
